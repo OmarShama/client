@@ -7,6 +7,43 @@ export default function useFetchUser(userId) {
   );
 }
 
+export default function useMutateLoginUser() {
+  return useMutation(
+    (user) => {
+      const data = new FormData();
+      data.append("email", user.email);
+      data.append("password", user.password);
+      return apiService.post(`user/login`, data);
+    },
+    {
+      // When mutate is called:
+      onSuccess: (responseData) => {
+        // Store Token in local storage
+      },
+      onError: (e) => console.log(e.message),
+    }
+  );
+}
+
+
+export default function useMutateRegisterUser() {
+  return useMutation(
+    (user) => {
+      const data = new FormData();
+      data.append("email", user.email);
+      data.append("password", user.password);
+      return apiService.post(`user/register`, data);
+    },
+    {
+      // When mutate is called:
+      onSuccess: (responseData) => {
+        // Redirect to login page
+      },
+      onError: (e) => console.log(e.message),
+    }
+  );
+}
+
 export default function useMutateUpdateUser(userId) {
   const queryClint = useQueryClient();
   return useMutation(

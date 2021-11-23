@@ -4,23 +4,22 @@ const baseUrl = process.env.REACT_APP_API_URL;
 
 // Request interceptor
 axios.interceptors.request.use(
-    function (config) {
-        const accessToken = localStorage.getItem("jwt") ? JSON.parse(localStorage.getItem("jwt")) : null;
-        const headers = {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken
-        };
+  function (config) {
+    const accessToken =
+      localStorage.getItem("jwt") && JSON.parse(localStorage.getItem("jwt"));
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    };
 
-        config.headers.common = headers;
-        config.baseURL = baseUrl;
-        return config;
-    },
-    function (error) {
-        return Promise.reject(error);
-    }
+    config.headers.common = headers;
+    config.baseURL = baseUrl;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
 );
-
-
 
 export default axios;
